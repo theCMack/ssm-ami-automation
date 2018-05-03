@@ -26,8 +26,6 @@ Resources:
     Properties:
       TemplateURL: !Sub "https://s3.amazonaws.com/${S3BucketName}/ssm.yml"
       Parameters:
-        SubnetId: !Ref "SubnetId"
-        EC2InstanceProfile: !GetAtt "SSMRoles.Outputs.EC2InstanceProfile"
         SSMRoleARN: !GetAtt "SSMRoles.Outputs.SSMRoleARN"
   SSMLambda:
     Type: "AWS::CloudFormation::Stack"
