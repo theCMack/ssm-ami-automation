@@ -4,9 +4,6 @@ Outputs:
   SSMLambdaARN:
     Value: !GetAtt "SSMLambda.Outputs.SSMLambdaARN"
 Parameters:
-  SubnetId:
-    Description: "VPC Subnet ID"
-    Type: "AWS::EC2::Subnet::Id"
   NewAMITopicARN:
     Description: "New AMI SNS topic ARN"
     Type: "String"
