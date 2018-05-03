@@ -29,8 +29,6 @@ Resources:
           - Effect: "Allow"
             Action:
             - "iam:PassRole"
-            Resource:
-            - !GetAtt "EC2InstanceRole.Arn"
   LambdaRole:
     Type: "AWS::IAM::Role"
     Properties:
