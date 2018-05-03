@@ -1,6 +1,9 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: "AWS CloudFormation template to automate encrypting new AMIs process"
 Parameters:
+  EC2InstanceProfile:
+    Description: "EC2 instance profile name"
+    Type: "String"
   SSMRoleARN:
     Description: "SSM service role ARN"
     Type: "String"
