@@ -37,10 +37,9 @@ Resources:
           maxAttempts: 3
           onFailure: "Abort"
           inputs:
-            ImageId: "{{SourceAmiId}}"
+            SourceImageId: "{{SourceAmiId}}"
             SourceRegion: "us-east-1"
-            ImageName: "Encrypted Copy of {{ SourceAmiId }}"
+            ImageName: "Encrypted Copy of {{SourceAmiId}} on {{global:DATE}}"
             Encrypted: true
         outputs:
         - createEncryptedCopy.ImageId
-        - createEncryptedCopy.ImageName
