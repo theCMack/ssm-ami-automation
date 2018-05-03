@@ -17,6 +17,14 @@ Resources:
         description: "Automation Document to Encrypt Linux AMI."
         assumeRole: "{{AutomationAssumeRoleARN}}"
         parameters:
+          InstanceProfileName:
+            type: "String"
+            description: "EC2 IAM profile that is allowed to perform RunCommand."
+            default: !Ref "EC2InstanceProfile"
+          AutomationAssumeRoleARN:
+            type: "String"
+            description: "Role under which to execute this automation."
+            default: !Ref "SSMRoleARN"
           SourceAmiId:
             type: "String"
             description: "The source Amazon Machine Image ID."
