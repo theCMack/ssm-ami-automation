@@ -7,8 +7,9 @@ Parameters:
   NewAMITopicARN:
     Description: "New AMI SNS topic ARN"
     Type: "String"
-    Default: "arn:aws:sns:us-east-1:137112412989:amazon-linux-ami-updates"
-  NotificationEmail:
+#    Default: "arn:aws:sns:us-east-1:137112412989:amazon-linux-ami-updates"
+    Default: "arn:aws:sns:us-east-1:829829645734:SNSLinux" #created for testing
+    NotificationEmail:
     Description: "Notification email address for SSM updates"
     AllowedPattern: "^.+@.+$"
     Type: "String"
