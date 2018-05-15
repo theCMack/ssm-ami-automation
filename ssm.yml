@@ -47,7 +47,7 @@ Resources:
           maxAttempts: 1
           onFailure": "Abort"
           inputs:
-            FunctionName: "Automation-UpdateSsmParam"
+            FunctionName: "parameterStoreUpdater"
             Payload: "{\"parameterName\":\"latestEncryptedLinuxAMI\", \"parameterValue\":\"{{createEncryptedCopy.ImageId}}\"}"
         outputs:
         - createEncryptedCopy.ImageId
