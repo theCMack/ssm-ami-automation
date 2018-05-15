@@ -43,3 +43,4 @@ Resources:
             Encrypted: true
         outputs:
         - createEncryptedCopy.ImageId
+        - ImageName
