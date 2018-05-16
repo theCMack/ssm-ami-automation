@@ -43,6 +43,7 @@ Resources:
           Action: "sts:AssumeRole"
       ManagedPolicyArns:
       - "arn:aws:iam::aws:policy/service-role/AmazonSSMAutomationRole"
+      - "arn:aws:iam::aws:policy/AWSLambdaRole"
       Path: "/"
       Policies:
       - PolicyName: "passrole"
@@ -66,7 +67,7 @@ Resources:
             - "lambda.amazonaws.com"
           Action: "sts:AssumeRole"
       ManagedPolicyArns:
-      - "arn:aws:iam::aws:policy/AWSLambdaFullAccess"
+      - "arn:aws:iam::aws:policy/AWSLambdaExecute"
       - "arn:aws:iam::aws:policy/AmazonSSMFullAccess"
       - "arn:aws:iam::aws:policy/service-role/AmazonSSMAutomationRole"
       Path: "/"
