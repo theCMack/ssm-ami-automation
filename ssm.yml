@@ -45,7 +45,7 @@ Resources:
           action: "aws:invokeLambdaFunction"
           timeoutSeconds: 15
           maxAttempts: 1
-          onFailure": "Abort"
+          onFailure: "Abort"
           inputs:
             FunctionName: "parameterStoreUpdater"
             Payload: "{\"parameterName\":\"latestEncryptedLinuxAMI\", \"parameterValue\":\"{{createEncryptedCopy.ImageId}}\"}"
