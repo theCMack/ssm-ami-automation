@@ -48,6 +48,6 @@ Resources:
           onFailure: "Abort"
           inputs:
             FunctionName: "parameterStoreUpdater"
-            Payload: "{\"parameterName\":\"latestEncryptedLinuxAMI\", \"parameterValue\":\"{{createEncryptedCopy.ImageId}}\", \"parameterDescription\":\"{{createEncryptedCopy.ImageName}}\"}"
+            Payload: "{\"parameterName\":\"latestEncryptedLinuxAMI\", \"parameterValue\":\"{{createEncryptedCopy.ImageId}}\", \"parameterDescription\":\"Encrypted Amazon Linux 2 - Sourced from {{SourceAmiId}} on {{global:DATE}}\"}"
         outputs:
         - createEncryptedCopy.ImageId
