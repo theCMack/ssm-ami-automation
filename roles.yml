@@ -43,7 +43,7 @@ Resources:
           Action: "sts:AssumeRole"
       ManagedPolicyArns:
       - "arn:aws:iam::aws:policy/service-role/AmazonSSMAutomationRole"
-      - "arn:aws:iam::aws:policy/AWSLambdaRole"
+      - "arn:aws:iam::aws:policy/AWSLambdaFullAccess"
       Path: "/"
       Policies:
       - PolicyName: "passrole"
