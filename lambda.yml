@@ -43,8 +43,7 @@ Resources:
             logger.setLevel(logging.INFO)
             ec2_client = boto3.client('ec2')
             ssm_client = boto3.client('ssm')
-
-            response = ec2_client.describe_images(Owners=['amazon'], Filters=[{'Name': 'name', 'Values': ['amzn-ami-hvm-????.??.??.*-x86_64-gp2']}])
+            response = ec2_client.describe_images(Owners=['amazon'], Filters=[{'Name': 'name', 'Values': ['amzn2-ami-hvm-????.??.??.*-x86_64-gp2']}])
             images = [{'ImageId':image['ImageId'], 'CreationDate': datetime.strptime(image['CreationDate'], '%Y-%m-%dT%H:%M:%S.%fZ')} for image in response['Images']]
             images = sorted(images, reverse=True, key=operator.itemgetter('CreationDate'))
             ami_id = images[0]['ImageId']
