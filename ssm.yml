@@ -17,7 +17,7 @@ Resources:
       DocumentType: "Automation"
       Content:
         schemaVersion: "0.3"
-        description: "Automation Document to Encrypt Linux AMI."
+        description: "Automation Document to Encrypt Amazon Linux 2 AMI."
         assumeRole: "{{AutomationAssumeRoleARN}}"
         parameters:
           InstanceProfileName:
@@ -30,7 +30,7 @@ Resources:
             default: !Ref "SSMRoleARN"
           SourceAmiId:
             type: "String"
-            description: "The source Amazon Machine Image ID."
+            description: "Source Amazon Linux 2 AMI ID."
         mainSteps:
         - name: "createEncryptedCopy"
           action: "aws:copyImage"
@@ -39,7 +39,7 @@ Resources:
           inputs:
             SourceImageId: "{{SourceAmiId}}"
             SourceRegion: "us-east-1"
-            ImageName: "Encrypted Copy of {{SourceAmiId}} on {{global:DATE}}"
+            ImageName: "Encrypted Amazon Linux 2 - Sourced from {{SourceAmiId}} on {{global:DATE}}"
             Encrypted: true
         - name: "updateSsmParam"
           action: "aws:invokeLambdaFunction"
