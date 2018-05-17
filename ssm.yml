@@ -51,4 +51,3 @@ Resources:
             Payload: "{\"parameterName\":\"latestEncryptedLinuxAMI\", \"parameterValue\":\"{{createEncryptedCopy.ImageId}}\", \"parameterDescription\":\"{{createEncryptedCopy.ImageName}}\"}"
         outputs:
         - createEncryptedCopy.ImageId
-        - createEncryptedCopy.ImageName
