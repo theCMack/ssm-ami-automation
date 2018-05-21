@@ -8,10 +8,10 @@ Parameters:
     Description: "AMI Encryption SSM service role ARN"
     Type: "String"
 Outputs:
-  WindowsSSMAutomationDocument:
-    Value: !Ref "WindowsSSMAutomationDocument"
+  Windows2016SQL2017STDSSMAutomationDocument:
+    Value: !Ref "Windows2016SQL2017STDSSMAutomationDocument"
 Resources:
-  WindowsSSMAutomationDocument:
+  Windows2016SQL2017STDSSMAutomationDocument:
     Type: "AWS::SSM::Document"
     Properties:
       DocumentType: "Automation"
