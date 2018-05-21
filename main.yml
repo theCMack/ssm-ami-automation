@@ -10,14 +10,14 @@ Outputs:
   Windows2016SQL2017STDSSMLambdaARN:
     Value: !GetAtt "Windows2016SQL2017STDSSMLambda.Outputs.Windows2016SQL2017STDSSMLambdaARN"
 Parameters:
-  AmazonLinuxNewAMITopicARN:
-    Description: "Amazon Linux New AMI SNS topic ARN"
-    Type: "String"
-    Default: "arn:aws:sns:us-east-1:137112412989:amazon-linux-ami-updates" # Amazon Linux
-  WindowsNewAMITopicARN:
-    Description: "Windows New AMI SNS topic ARN"
-    Type: "String"
-    Default: "arn:aws:sns:us-east-1:801119661308:ec2-windows-ami-update"   # Windows
+  # AmazonLinuxNewAMITopicARN:
+  #   Description: "Amazon Linux New AMI SNS topic ARN"
+  #   Type: "String"
+  #   Default: "arn:aws:sns:us-east-1:137112412989:amazon-linux-ami-updates" # Amazon Linux
+  # WindowsNewAMITopicARN:
+  #   Description: "Windows New AMI SNS topic ARN"
+  #   Type: "String"
+  #   Default: "arn:aws:sns:us-east-1:801119661308:ec2-windows-ami-update"   # Windows
   S3BucketName:
     Description: "S3 Bucket that contains the YMLs"
     Type: "String"
@@ -40,7 +40,7 @@ Resources:
     Properties:
       TemplateURL: !Sub "https://s3.amazonaws.com/${S3BucketName}/AmazonLinux2lambda.yml"
       Parameters:
-        AmazonLinuxNewAMITopicARN: !Ref "AmazonLinuxNewAMITopicARN"
+        AmazonLinuxNewAMITopicARN: "arn:aws:sns:us-east-1:137112412989:amazon-linux-ami-updates"
         AMIeLambdaRoleARN: !GetAtt "AMIeSSMRoles.Outputs.AMIeLambdaRoleARN"
         AMIeSSMRoleARN: !GetAtt "AMIeSSMRoles.Outputs.AMIeSSMRoleARN"
         AmazonLinuxSSMAutomationDocument: !GetAtt "AmazonLinuxSSMDocument.Outputs.AmazonLinuxSSMAutomationDocument"
@@ -56,7 +56,7 @@ Resources:
     Properties:
       TemplateURL: !Sub "https://s3.amazonaws.com/${S3BucketName}/Windows2012R2Baselambda.yml"
       Parameters:
-        WindowsNewAMITopicARN: !Ref "WindowsNewAMITopicARN"
+        WindowsNewAMITopicARN: "arn:aws:sns:us-east-1:801119661308:ec2-windows-ami-update"
         AMIeLambdaRoleARN: !GetAtt "AMIeSSMRoles.Outputs.AMIeLambdaRoleARN"
         AMIeSSMRoleARN: !GetAtt "AMIeSSMRoles.Outputs.AMIeSSMRoleARN"
         Windows2012R2BaseSSMAutomationDocument: !GetAtt "Windows2012R2BaseSSMDocument.Outputs.Windows2012R2BaseSSMAutomationDocument"
@@ -72,7 +72,7 @@ Resources:
     Properties:
       TemplateURL: !Sub "https://s3.amazonaws.com/${S3BucketName}/Windows2016FullBaselambda.yml"
       Parameters:
-        WindowsNewAMITopicARN: !Ref "WindowsNewAMITopicARN"
+        WindowsNewAMITopicARN: "arn:aws:sns:us-east-1:801119661308:ec2-windows-ami-update"
         AMIeLambdaRoleARN: !GetAtt "AMIeSSMRoles.Outputs.AMIeLambdaRoleARN"
         AMIeSSMRoleARN: !GetAtt "AMIeSSMRoles.Outputs.AMIeSSMRoleARN"
         Windows2016FullBaseSSMAutomationDocument: !GetAtt "Windows2016FullBaseSSMDocument.Outputs.Windows2016FullBaseSSMAutomationDocument"
@@ -88,7 +88,7 @@ Resources:
     Properties:
       TemplateURL: !Sub "https://s3.amazonaws.com/${S3BucketName}/Windows2016SQL2017STDlambda.yml"
       Parameters:
-        WindowsNewAMITopicARN: !Ref "WindowsNewAMITopicARN"
+        WindowsNewAMITopicARN: "arn:aws:sns:us-east-1:801119661308:ec2-windows-ami-update"
         AMIeLambdaRoleARN: !GetAtt "AMIeSSMRoles.Outputs.AMIeLambdaRoleARN"
         AMIeSSMRoleARN: !GetAtt "AMIeSSMRoles.Outputs.AMIeSSMRoleARN"
         Windows2016SQL2017STDSSMAutomationDocument: !GetAtt "Windows2016SQL2017STDSSMDocument.Outputs.Windows2016SQL2017STDSSMAutomationDocument"
