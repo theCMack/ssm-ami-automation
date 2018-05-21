@@ -1,8 +1,8 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: "AWS CloudFormation template to automate AMI patching process"
 Outputs:
-  SSMLambdaARN:
-    Value: !GetAtt "SSMLambda.Outputs.SSMLambdaARN"
+  AmazonLinux2SSMLambdaARN:
+    Value: !GetAtt "AmazonLinux2SSMLambda.Outputs.AmazonLinux2SSMLambdaARN"
 Parameters:
   NewAMITopicARN:
     Description: "New AMI SNS topic ARN"
@@ -27,7 +27,7 @@ Resources:
       Parameters:
         AMIeEC2InstanceProfile: !GetAtt "AMIeSSMRoles.Outputs.AMIeEC2InstanceProfile"
         AMIeSSMRoleARN: !GetAtt "AMIeSSMRoles.Outputs.AMIeSSMRoleARN"
-  SSMLambda:
+  AmazonLinux2SSMLambda:
     Type: "AWS::CloudFormation::Stack"
     Properties:
       TemplateURL: !Sub "https://s3.amazonaws.com/${S3BucketName}/lambda.yml"

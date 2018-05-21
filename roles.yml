@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: "Creates IAM roles requiredSSMLambdaARN for SSM"
+Description: "Creates IAM roles required for SSM and Lambda Automation of AMI Encryption"
 Outputs:
   AMIeEC2InstanceProfile:
     Value: !Ref "AMIeEC2InstanceProfile"

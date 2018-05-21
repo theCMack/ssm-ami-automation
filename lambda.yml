@@ -16,10 +16,10 @@ Parameters:
     Description: "Automation document name"
     Type: "String"
 Outputs:
-    SSMLambdaARN:
-      Value: !GetAtt "SSMLambda.Arn"
+    AmazonLinux2SSMLambdaARN:
+      Value: !GetAtt "AmazonLinux2SSMLambda.Arn"
 Resources:
-  SSMLambda:
+  AmazonLinux2SSMLambda:
     Type: "AWS::Lambda::Function"
     Properties:
       Handler: "index.lambda_handler"
@@ -55,7 +55,7 @@ Resources:
   SSMLambdaInvokePermission:
     Type: "AWS::Lambda::Permission"
     Properties:
-      FunctionName: !GetAtt "SSMLambda.Arn"
+      FunctionName: !GetAtt "AmazonLinux2SSMLambda.Arn"
       Action: "lambda:InvokeFunction"
       Principal: "sns.amazonaws.com"
       SourceArn: !Ref "NewAMITopicARN"
