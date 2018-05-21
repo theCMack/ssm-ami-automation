@@ -49,7 +49,7 @@ Resources:
             ami_id = images[0]['ImageId']
             logger.info("ami-id: {}".format(ami_id))
             response = ssm_client.start_automation_execution(DocumentName=os.environ['DocumentName'],
-              Parameters={'SourceAmiId': [ami_id,], 'AutomationAssumeRoleARN': [os.environ['AutomationAssumeRoleARN'],]}
+              Parameters={'AmazonLinux2SourceAmiId': [ami_id,], 'AutomationAssumeRoleARN': [os.environ['AutomationAssumeRoleARN'],]}
             )
             logger.info(response)
   SSMLambdaInvokePermission:

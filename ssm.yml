@@ -1,11 +1,11 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: "AWS CloudFormation template to automate encrypting new AMIs process"
+Description: "SSM creation to automate encrypting new Amazon Linux AMIs"
 Parameters:
   AMIeEC2InstanceProfile:
-    Description: "EC2 instance profile name"
+    Description: "AMI Encryption EC2 instance profile name"
     Type: "String"
   AMIeSSMRoleARN:
-    Description: "SSM service role ARN"
+    Description: "AMI Encryption SSM service role ARN"
     Type: "String"
 Outputs:
   SSMAutomationDocument:
@@ -17,7 +17,7 @@ Resources:
       DocumentType: "Automation"
       Content:
         schemaVersion: "0.3"
-        description: "Automation Document to Encrypt Amazon Linux 2 AMI."
+        description: "Automation Document to Encrypt Amazon Linux AMIs."
         assumeRole: "{{AutomationAssumeRoleARN}}"
         parameters:
           InstanceProfileName:
@@ -28,7 +28,7 @@ Resources:
             type: "String"
             description: "Role under which to execute this automation."
             default: !Ref "AMIeSSMRoleARN"
-          SourceAmiId:
+          AmazonLinux2SourceAmiId:
             type: "String"
             description: "Source Amazon Linux 2 AMI ID."
         mainSteps:
