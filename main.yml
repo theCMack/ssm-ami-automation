@@ -78,19 +78,19 @@ Resources:
         AMIeLambdaRoleARN: !GetAtt "AMIeSSMRoles.Outputs.AMIeLambdaRoleARN"
         AMIeSSMRoleARN: !GetAtt "AMIeSSMRoles.Outputs.AMIeSSMRoleARN"
         Windows2016FullBaseSSMAutomationDocument: !GetAtt "Windows2016FullBaseSSMDocument.Outputs.Windows2016FullBaseSSMAutomationDocument"
-  Windows2016FullBaseSSMDocument:
+  Windows2016SQL2017STDSSMDocument:
     Type: "AWS::CloudFormation::Stack"
     Properties:
-      TemplateURL: !Sub "https://s3.amazonaws.com/${S3BucketName}/Windows2016FullBasessm.yml"
+      TemplateURL: !Sub "https://s3.amazonaws.com/${S3BucketName}/Windows2016SQL2017STDssm.yml"
       Parameters:
         AMIeEC2InstanceProfile: !GetAtt "AMIeSSMRoles.Outputs.AMIeEC2InstanceProfile"
         AMIeSSMRoleARN: !GetAtt "AMIeSSMRoles.Outputs.AMIeSSMRoleARN"
-  Windows2016FullBaseSSMLambda:
+  Windows2016SQL2017STDSSMLambda:
     Type: "AWS::CloudFormation::Stack"
     Properties:
-      TemplateURL: !Sub "https://s3.amazonaws.com/${S3BucketName}/Windows2016FullBaselambda.yml"
+      TemplateURL: !Sub "https://s3.amazonaws.com/${S3BucketName}/Windows2016SQL2017STDlambda.yml"
       Parameters:
         WindowsNewAMITopicARN: !Ref "WindowsNewAMITopicARN"
         AMIeLambdaRoleARN: !GetAtt "AMIeSSMRoles.Outputs.AMIeLambdaRoleARN"
         AMIeSSMRoleARN: !GetAtt "AMIeSSMRoles.Outputs.AMIeSSMRoleARN"
-        Windows2016FullBaseSSMAutomationDocument: !GetAtt "Windows2016FullBaseSSMDocument.Outputs.Windows2016FullBaseSSMAutomationDocument"
+        Windows2016SQL2017STDSSMAutomationDocument: !GetAtt "Windows2016SQL2017STDSSMDocument.Outputs.Windows2016SQL2017STDSSMAutomationDocument"
