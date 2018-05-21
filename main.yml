@@ -3,13 +3,19 @@ Description: "AWS CloudFormation template to automate AMI patching process"
 Outputs:
   AmazonLinux2SSMLambdaARN:
     Value: !GetAtt "AmazonLinux2SSMLambda.Outputs.AmazonLinux2SSMLambdaARN"
+  Windows2012R2BaseSSMLambdaARN:
+    Value: !GetAtt "Windows2012R2BaseSSMLambda.Outputs.Windows2012R2BaseSSMLambdaARN"
 Parameters:
   AmazonLinuxNewAMITopicARN:
     Description: "Amazon Linux New AMI SNS topic ARN"
     Type: "String"
 #    Default: "arn:aws:sns:us-east-1:137112412989:amazon-linux-ami-updates" # Amazon Linux
-#    Default: "arn:aws:sns:us-east-1:801119661308:ec2-windows-ami-update"   # Windows
     Default: "arn:aws:sns:us-east-1:829829645734:SNSLinux" #created for testing
+  WindowsNewAMITopicARN:
+    Description: "Windows New AMI SNS topic ARN"
+    Type: "String"
+#    Default: "arn:aws:sns:us-east-1:801119661308:ec2-windows-ami-update"   # Windows
+    Default: "arn:aws:sns:us-east-1:829829645734:SNSWindows" #created for testing
   S3BucketName:
     Description: "S3 Bucket that contains the YMLs"
     Type: "String"
@@ -20,10 +26,10 @@ Resources:
     Type: "AWS::CloudFormation::Stack"
     Properties:
       TemplateURL: !Sub "https://s3.amazonaws.com/${S3BucketName}/roles.yml"
-  SSMDocument:
+  AmazonLinuxSSMDocument:
     Type: "AWS::CloudFormation::Stack"
     Properties:
-      TemplateURL: !Sub "https://s3.amazonaws.com/${S3BucketName}/ssm.yml"
+      TemplateURL: !Sub "https://s3.amazonaws.com/${S3BucketName}/AmazonLinuxssm.yml"
       Parameters:
         AMIeEC2InstanceProfile: !GetAtt "AMIeSSMRoles.Outputs.AMIeEC2InstanceProfile"
         AMIeSSMRoleARN: !GetAtt "AMIeSSMRoles.Outputs.AMIeSSMRoleARN"
@@ -35,4 +41,13 @@ Resources:
         AmazonLinuxNewAMITopicARN: !Ref "AmazonLinuxNewAMITopicARN"
         AMIeLambdaRoleARN: !GetAtt "AMIeSSMRoles.Outputs.AMIeLambdaRoleARN"
         AMIeSSMRoleARN: !GetAtt "AMIeSSMRoles.Outputs.AMIeSSMRoleARN"
-        SSMAutomationDocument: !GetAtt "SSMDocument.Outputs.SSMAutomationDocument"
+        AmazonLinuxSSMAutomationDocument: !GetAtt "AmazonLinuxSSMDocument.Outputs.AmazonLinuxSSMAutomationDocument"
+  Windows2012R2BaseSSMLambda:
+    Type: "AWS::CloudFormation::Stack"
+    Properties:
+      TemplateURL: !Sub "https://s3.amazonaws.com/${S3BucketName}/Windows2012R2Baselambda.yml"
+      Parameters:
+        WindowsNewAMITopicARN: !Ref "WindowsNewAMITopicARN"
+        AMIeLambdaRoleARN: !GetAtt "AMIeSSMRoles.Outputs.AMIeLambdaRoleARN"
+        AMIeSSMRoleARN: !GetAtt "AMIeSSMRoles.Outputs.AMIeSSMRoleARN"
+        WindowsSSMAutomationDocument: !GetAtt "SSMDocument.Outputs.WindowsSSMAutomationDocument"

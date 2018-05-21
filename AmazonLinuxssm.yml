@@ -8,10 +8,10 @@ Parameters:
     Description: "AMI Encryption SSM service role ARN"
     Type: "String"
 Outputs:
-  SSMAutomationDocument:
-    Value: !Ref "SSMAutomationDocument"
+  AmazonLinuxSSMAutomationDocument:
+    Value: !Ref "AmazonLinuxSSMAutomationDocument"
 Resources:
-  SSMAutomationDocument:
+  AmazonLinuxSSMAutomationDocument:
     Type: "AWS::SSM::Document"
     Properties:
       DocumentType: "Automation"

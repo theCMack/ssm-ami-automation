@@ -1,25 +1,25 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: "Creates lambda function to trigger SSM automation and allows it to be invoked by SNS"
 Parameters:
-  AmazonLinuxNewAMITopicARN:
-    Description: "Amazon Linux New AMI SNS topic ARN"
+  WindowsNewAMITopicARN:
+    Description: "Windows New AMI SNS topic ARN"
     Type: "String"
-#    Default: "arn:aws:sns:us-east-1:137112412989:amazon-linux-ami-updates"
-    Default: "arn:aws:sns:us-east-1:829829645734:SNSLinux" #created for testing
+#    Default: "arn:aws:sns:us-east-1:801119661308:ec2-windows-ami-update"
+    Default: "arn:aws:sns:us-east-1:829829645734:SNSWindows" #created for testing
   AMIeLambdaRoleARN:
     Description: "Lambda role ARN"
     Type: "String"
   AMIeSSMRoleARN:
     Description: "SSM role ARN"
     Type: "String"
-  AmazonLinuxSSMAutomationDocument:
+  WindowsSSMAutomationDocument:
     Description: "Automation document name"
     Type: "String"
 Outputs:
-    AmazonLinux2SSMLambdaARN:
-      Value: !GetAtt "AmazonLinux2SSMLambda.Arn"
+    Windows2012R2BaseSSMLambdaARN:
+      Value: !GetAtt "Windows2012R2BaseSSMLambda.Arn"
 Resources:
-  AmazonLinux2SSMLambda:
+  Windows2012R2BaseSSMLambda:
     Type: "AWS::Lambda::Function"
     Properties:
       Handler: "index.lambda_handler"
@@ -28,7 +28,7 @@ Resources:
       Timeout: 300
       Environment:
         Variables:
-          DocumentName: !Ref "AmazonLinuxSSMAutomationDocument"
+          DocumentName: !Ref "WindowsSSMAutomationDocument"
           AutomationAssumeRoleARN: !Ref "AMIeSSMRoleARN"
       Code:
         ZipFile: |
@@ -43,19 +43,19 @@ Resources:
             logger.setLevel(logging.INFO)
             ec2_client = boto3.client('ec2')
             ssm_client = boto3.client('ssm')
-            response = ec2_client.describe_images(Owners=['amazon'], Filters=[{'Name': 'name', 'Values': ['amzn2-ami-hvm-????.??.??.*-x86_64-gp2']}])
+            response = ec2_client.describe_images(Owners=['amazon'], Filters=[{'Name': 'name', 'Values': ['Windows_Server-2012-R2_RTM-English-64Bit-Base-????.??.??']}])
             images = [{'ImageId':image['ImageId'], 'CreationDate': datetime.strptime(image['CreationDate'], '%Y-%m-%dT%H:%M:%S.%fZ')} for image in response['Images']]
             images = sorted(images, reverse=True, key=operator.itemgetter('CreationDate'))
             ami_id = images[0]['ImageId']
             logger.info("ami-id: {}".format(ami_id))
             response = ssm_client.start_automation_execution(DocumentName=os.environ['DocumentName'],
-              Parameters={'AmazonLinux2SourceAmiId': [ami_id,], 'AutomationAssumeRoleARN': [os.environ['AutomationAssumeRoleARN'],]}
+              Parameters={'Windows2012R2BaseSourceAmiId': [ami_id,], 'AutomationAssumeRoleARN': [os.environ['AutomationAssumeRoleARN'],]}
             )
             logger.info(response)
   SSMLambdaInvokePermission:
     Type: "AWS::Lambda::Permission"
     Properties:
-      FunctionName: !GetAtt "AmazonLinux2SSMLambda.Arn"
+      FunctionName: !GetAtt "Windows2012R2BaseSSMLambda.Arn"
       Action: "lambda:InvokeFunction"
       Principal: "sns.amazonaws.com"
-      SourceArn: !Ref "AmazonLinuxNewAMITopicARN"
+      SourceArn: !Ref "WindowsNewAMITopicARN"

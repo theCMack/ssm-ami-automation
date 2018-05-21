@@ -1,0 +1,45 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "SSM creation to automate encrypting new Windows AMIs"
+Parameters:
+  AMIeEC2InstanceProfile:
+    Description: "AMI Encryption EC2 instance profile name"
+    Type: "String"
+  AMIeSSMRoleARN:
+    Description: "AMI Encryption SSM service role ARN"
+    Type: "String"
+Outputs:
+  WindowsSSMAutomationDocument:
+    Value: !Ref "WindowsSSMAutomationDocument"
+Resources:
+  WindowsSSMAutomationDocument:
+    Type: "AWS::SSM::Document"
+    Properties:
+      DocumentType: "Automation"
+      Content:
+        schemaVersion: "0.3"
+        description: "Automation Document to Encrypt Windows AMIs."
+        assumeRole: "{{AutomationAssumeRoleARN}}"
+        parameters:
+          InstanceProfileName:
+            type: "String"
+            description: "EC2 IAM profile that is allowed to perform RunCommand."
+            default: !Ref "AMIeEC2InstanceProfile"
+          AutomationAssumeRoleARN:
+            type: "String"
+            description: "Role under which to execute this automation."
+            default: !Ref "AMIeSSMRoleARN"
+          Windows2012R2BaseSourceAmiId:
+            type: "String"
+            description: "Source Amazon Linux 2 AMI ID."
+        mainSteps:
+        - name: "createEncryptedCopy"
+          action: "aws:copyImage"
+          maxAttempts: 3
+          onFailure: "Abort"
+          inputs:
+            SourceImageId: "{{Windows2012R2BaseSourceAmiId}}"
+            SourceRegion: "us-east-1"
+            ImageName: "Encrypted Amazon Linux 2 - Sourced from {{Windows2012R2BaseSourceAmiId}} on {{global:DATE}}"
+            Encrypted: true
+        outputs:
+        - createEncryptedCopy.ImageId
