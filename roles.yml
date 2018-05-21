@@ -1,12 +1,12 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: "Creates IAM roles requiredSSMLambdaARN for SSM"
 Outputs:
-  EC2InstanceProfile:
-    Value: !Ref "EC2InstanceProfile"
-  SSMRoleARN:
-    Value: !GetAtt "SSMRole.Arn"
-  LambdaRoleARN:
-    Value: !GetAtt "LambdaRole.Arn"
+  AMIeEC2InstanceProfile:
+    Value: !Ref "AMIeEC2InstanceProfile"
+  AMIeSSMRoleARN:
+    Value: !GetAtt "AMIeSSMRole.Arn"
+  AMIeLambdaRoleARN:
+    Value: !GetAtt "AMIeLambdaRole.Arn"
 Resources:
   EC2InstanceRole:
     Type: "AWS::IAM::Role"
@@ -23,13 +23,13 @@ Resources:
       ManagedPolicyArns:
       - "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"
       Path: "/"
-  EC2InstanceProfile:
+  AMIeEC2InstanceProfile:
     Type: "AWS::IAM::InstanceProfile"
     Properties:
       Path: "/"
       Roles:
       - !Ref "EC2InstanceRole"
-  SSMRole:
+  AMIeSSMRole:
     Type: "AWS::IAM::Role"
     Properties:
       AssumeRolePolicyDocument:
@@ -55,7 +55,7 @@ Resources:
             - "iam:PassRole"
             Resource:
             - !GetAtt "EC2InstanceRole.Arn"
-  LambdaRole:
+  AMIeLambdaRole:
     Type: "AWS::IAM::Role"
     Properties:
       AssumeRolePolicyDocument:
@@ -80,4 +80,4 @@ Resources:
             Action:
             - "iam:PassRole"
             Resource:
-            - !GetAtt "SSMRole.Arn"
+            - !GetAtt "AMIeSSMRole.Arn"

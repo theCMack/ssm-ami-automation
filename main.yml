@@ -19,7 +19,7 @@ Parameters:
     Type: "String"
     MinLength: 3
 Resources:
-  SSMRoles:
+  AMIeSSMRoles:
     Type: "AWS::CloudFormation::Stack"
     Properties:
       TemplateURL: !Sub "https://s3.amazonaws.com/${S3BucketName}/roles.yml"
@@ -28,16 +28,16 @@ Resources:
     Properties:
       TemplateURL: !Sub "https://s3.amazonaws.com/${S3BucketName}/ssm.yml"
       Parameters:
-        EC2InstanceProfile: !GetAtt "SSMRoles.Outputs.EC2InstanceProfile"
-        SSMRoleARN: !GetAtt "SSMRoles.Outputs.SSMRoleARN"
+        AMIeEC2InstanceProfile: !GetAtt "AMIeSSMRoles.Outputs.AMIeEC2InstanceProfile"
+        AMIeSSMRoleARN: !GetAtt "AMIeSSMRoles.Outputs.AMIeSSMRoleARN"
   SSMLambda:
     Type: "AWS::CloudFormation::Stack"
     Properties:
       TemplateURL: !Sub "https://s3.amazonaws.com/${S3BucketName}/lambda.yml"
       Parameters:
         NewAMITopicARN: !Ref "NewAMITopicARN"
-        LambdaRoleARN: !GetAtt "SSMRoles.Outputs.LambdaRoleARN"
-        SSMRoleARN: !GetAtt "SSMRoles.Outputs.SSMRoleARN"
+        AMIeLambdaRoleARN: !GetAtt "AMIeSSMRoles.Outputs.AMIeLambdaRoleARN"
+        AMIeSSMRoleARN: !GetAtt "AMIeSSMRoles.Outputs.AMIeSSMRoleARN"
         SSMAutomationDocument: !GetAtt "SSMDocument.Outputs.SSMAutomationDocument"
   SSMEvent:
     Type: "AWS::CloudFormation::Stack"

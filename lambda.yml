@@ -6,10 +6,10 @@ Parameters:
     Type: "String"
 #    Default: "arn:aws:sns:us-east-1:137112412989:amazon-linux-ami-updates"
     Default: "arn:aws:sns:us-east-1:829829645734:SNSLinux" #created for testing
-  LambdaRoleARN:
+  AMIeLambdaRoleARN:
     Description: "Lambda role ARN"
     Type: "String"
-  SSMRoleARN:
+  AMIeSSMRoleARN:
     Description: "SSM role ARN"
     Type: "String"
   SSMAutomationDocument:
@@ -24,12 +24,12 @@ Resources:
     Properties:
       Handler: "index.lambda_handler"
       Runtime: "python2.7"
-      Role: !Ref "LambdaRoleARN"
+      Role: !Ref "AMIeLambdaRoleARN"
       Timeout: 300
       Environment:
         Variables:
           DocumentName: !Ref "SSMAutomationDocument"
-          AutomationAssumeRoleARN: !Ref "SSMRoleARN"
+          AutomationAssumeRoleARN: !Ref "AMIeSSMRoleARN"
       Code:
         ZipFile: |
           import os

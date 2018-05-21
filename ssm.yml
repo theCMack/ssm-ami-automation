@@ -1,10 +1,10 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: "AWS CloudFormation template to automate encrypting new AMIs process"
 Parameters:
-  EC2InstanceProfile:
+  AMIeEC2InstanceProfile:
     Description: "EC2 instance profile name"
     Type: "String"
-  SSMRoleARN:
+  AMIeSSMRoleARN:
     Description: "SSM service role ARN"
     Type: "String"
 Outputs:
@@ -23,11 +23,11 @@ Resources:
           InstanceProfileName:
             type: "String"
             description: "EC2 IAM profile that is allowed to perform RunCommand."
-            default: !Ref "EC2InstanceProfile"
+            default: !Ref "AMIeEC2InstanceProfile"
           AutomationAssumeRoleARN:
             type: "String"
             description: "Role under which to execute this automation."
-            default: !Ref "SSMRoleARN"
+            default: !Ref "AMIeSSMRoleARN"
           SourceAmiId:
             type: "String"
             description: "Source Amazon Linux 2 AMI ID."
@@ -41,13 +41,5 @@ Resources:
             SourceRegion: "us-east-1"
             ImageName: "Encrypted Amazon Linux 2 - Sourced from {{SourceAmiId}} on {{global:DATE}}"
             Encrypted: true
-        - name: "updateSsmParam"
-          action: "aws:invokeLambdaFunction"
-          timeoutSeconds: 15
-          maxAttempts: 1
-          onFailure: "Abort"
-          inputs:
-            FunctionName: "parameterStoreUpdater"
-            Payload: "{\"parameterName\":\"latestEncryptedLinuxAMI\", \"parameterValue\":\"{{createEncryptedCopy.ImageId}}\", \"parameterDescription\":\"Encrypted Amazon Linux 2 - Sourced from {{SourceAmiId}} on {{global:DATE}}\"}"
         outputs:
         - createEncryptedCopy.ImageId
