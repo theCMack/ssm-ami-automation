@@ -9,6 +9,10 @@ Parameters:
     Default: "arn:aws:sns:us-east-1:829829645734:SNSLinux" #created for testing
   Windows2012R2BaseSSMLambdaARN:
     Type: "String"
+  Windows2016FullBaseSSMLambdaARN:
+    Type: "String"
+  Windows2016SQL2017STDSSMLambdaARN:
+    Type: "String"
   WindowsNewAMITopicARN:
     Type: "String"
 #    Default: "arn:aws:sns:us-east-1:801119661308:ec2-windows-ami-update"
@@ -24,5 +28,17 @@ Resources:
     Type: "AWS::SNS::Subscription"
     Properties:
       Endpoint: !Ref "Windows2012R2BaseSSMLambdaARN"
+      Protocol: lambda
+      TopicArn: !Ref "WindowsNewAMITopicARN"
+  AMITopicSubscription:
+    Type: "AWS::SNS::Subscription"
+    Properties:
+      Endpoint: !Ref "Windows2016FullBaseSSMLambdaARN"
+      Protocol: lambda
+      TopicArn: !Ref "WindowsNewAMITopicARN"
+  AMITopicSubscription:
+    Type: "AWS::SNS::Subscription"
+    Properties:
+      Endpoint: !Ref "Windows2016SQL2017STDSSMLambdaARN"
       Protocol: lambda
       TopicArn: !Ref "WindowsNewAMITopicARN"
