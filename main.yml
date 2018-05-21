@@ -13,18 +13,16 @@ Parameters:
   AmazonLinuxNewAMITopicARN:
     Description: "Amazon Linux New AMI SNS topic ARN"
     Type: "String"
-#    Default: "arn:aws:sns:us-east-1:137112412989:amazon-linux-ami-updates" # Amazon Linux
-    Default: "arn:aws:sns:us-east-1:829829645734:SNSLinux" #created for testing
+    Default: "arn:aws:sns:us-east-1:137112412989:amazon-linux-ami-updates" # Amazon Linux
   WindowsNewAMITopicARN:
     Description: "Windows New AMI SNS topic ARN"
     Type: "String"
-#    Default: "arn:aws:sns:us-east-1:801119661308:ec2-windows-ami-update"   # Windows
-    Default: "arn:aws:sns:us-east-1:829829645734:SNSWindows" #created for testing
+    Default: "arn:aws:sns:us-east-1:801119661308:ec2-windows-ami-update"   # Windows
   S3BucketName:
     Description: "S3 Bucket that contains the YMLs"
     Type: "String"
     MinLength: 3
-    Default: "ami-encryption-automagic" # My temporary S3 bucket that contains all the ymls
+    Default: "s3-bucket-that-contains-all-the-YMLs" # My temporary S3 bucket that contains all the ymls
 Resources:
   AMIeSSMRoles:
     Type: "AWS::CloudFormation::Stack"

@@ -4,8 +4,7 @@ Parameters:
   AmazonLinuxNewAMITopicARN:
     Description: "Amazon Linux New AMI SNS topic ARN"
     Type: "String"
-#    Default: "arn:aws:sns:us-east-1:137112412989:amazon-linux-ami-updates"
-    Default: "arn:aws:sns:us-east-1:829829645734:SNSLinux" #created for testing
+    Default: "arn:aws:sns:us-east-1:137112412989:amazon-linux-ami-updates"
   AMIeLambdaRoleARN:
     Description: "Lambda role ARN"
     Type: "String"

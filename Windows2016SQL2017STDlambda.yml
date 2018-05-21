@@ -4,8 +4,7 @@ Parameters:
   WindowsNewAMITopicARN:
     Description: "Windows New AMI SNS topic ARN"
     Type: "String"
-#    Default: "arn:aws:sns:us-east-1:801119661308:ec2-windows-ami-update"
-    Default: "arn:aws:sns:us-east-1:829829645734:SNSWindows" #created for testing
+    Default: "arn:aws:sns:us-east-1:801119661308:ec2-windows-ami-update"
   AMIeLambdaRoleARN:
     Description: "Lambda role ARN"
     Type: "String"
