@@ -11,6 +11,7 @@ Parameters:
 #    Default: "arn:aws:sns:us-east-1:801119661308:ec2-windows-ami-update"   # Windows
     Default: "arn:aws:sns:us-east-1:829829645734:SNSLinux" #created for testing
   S3BucketName:
+    Description: "S3 Bucket that contains the YMLs"
     Type: "String"
     MinLength: 3
     Default: "ami-encryption-automagic" # My temporary S3 bucket that contains all the ymls
