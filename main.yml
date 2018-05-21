@@ -50,4 +50,4 @@ Resources:
         WindowsNewAMITopicARN: !Ref "WindowsNewAMITopicARN"
         AMIeLambdaRoleARN: !GetAtt "AMIeSSMRoles.Outputs.AMIeLambdaRoleARN"
         AMIeSSMRoleARN: !GetAtt "AMIeSSMRoles.Outputs.AMIeSSMRoleARN"
-        WindowsSSMAutomationDocument: !GetAtt "SSMDocument.Outputs.WindowsSSMAutomationDocument"
+        WindowsSSMAutomationDocument: !GetAtt "WindowsSSMDocument.Outputs.WindowsSSMAutomationDocument"
