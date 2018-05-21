@@ -3,7 +3,7 @@ Automated AMI encryption of updated Amazon provided AMIs using SSM
 
 The idea is to auto create a new encrypted AMI every time Amazon updates an AMI such as Amazon Linux 2 or Windows 2016 Base.
 
-Current included Linux/Windows Versions
+Current included Linux/Windows Versions, US-East-1
 ---
 - Amazon Linux 2
 - Windows 2012 R2 Base
@@ -30,9 +30,9 @@ Creating stack
 
 1. Create an S3 bucket to store the templates, example `foobucket`
 2. Upload all CloudFormation templates except `main.yml` and `sns-subscription.yml` to the s3 bucket
-3. Run `main.yml` in the desired US-EAST-1 region and provide s3 bucket name, `foobucket`, where CloudFormation templates were uploaded
+3. Run `main.yml` in US-East-1 region and provide s3 bucket name, `foobucket`, where the CloudFormation templates were uploaded
 4. Note the `xSSMLambdaARN`s provided as output from the `main.yml` run
-5. Run `sns-subscription.yml` in the us-east-1 region and specify lambda ARNs from `xSSMLambdaARN` output created in step 2
+5. Run `sns-subscription.yml` in the US-East-1 region and specify lambda ARNs from `xSSMLambdaARN` output created in step 3
 
 
 *Forked from https://github.com/b-b3rn4rd/ssm-ami-automation
