@@ -12,14 +12,14 @@ Parameters:
   AMIeSSMRoleARN:
     Description: "SSM role ARN"
     Type: "String"
-  Windows2012R2BaseSSMAutomationDocument:
+  Windows2016SQL2017STDSSMAutomationDocument:
     Description: "Automation document name"
     Type: "String"
 Outputs:
-    Windows2012R2BaseSSMLambdaARN:
-      Value: !GetAtt "Windows2012R2BaseSSMLambda.Arn"
+    Windows2016SQL2017STDSSMLambdaARN:
+      Value: !GetAtt "Windows2016SQL2017STDSSMLambda.Arn"
 Resources:
-  Windows2012R2BaseSSMLambda:
+  Windows2016SQL2017STDSSMLambda:
     Type: "AWS::Lambda::Function"
     Properties:
       Handler: "index.lambda_handler"
@@ -28,7 +28,7 @@ Resources:
       Timeout: 300
       Environment:
         Variables:
-          DocumentName: !Ref "Windows2012R2BaseSSMAutomationDocument"
+          DocumentName: !Ref "Windows2016SQL2017STDSSMAutomationDocument"
           AutomationAssumeRoleARN: !Ref "AMIeSSMRoleARN"
       Code:
         ZipFile: |
@@ -43,19 +43,19 @@ Resources:
             logger.setLevel(logging.INFO)
             ec2_client = boto3.client('ec2')
             ssm_client = boto3.client('ssm')
-            response = ec2_client.describe_images(Owners=['amazon'], Filters=[{'Name': 'name', 'Values': ['Windows_Server-2012-R2_RTM-English-64Bit-Base-????.??.??']}])
+            response = ec2_client.describe_images(Owners=['amazon'], Filters=[{'Name': 'name', 'Values': ['Windows_Server-2016-English-Full-SQL_2017_Standard-????.??.??']}])
             images = [{'ImageId':image['ImageId'], 'CreationDate': datetime.strptime(image['CreationDate'], '%Y-%m-%dT%H:%M:%S.%fZ')} for image in response['Images']]
             images = sorted(images, reverse=True, key=operator.itemgetter('CreationDate'))
             ami_id = images[0]['ImageId']
             logger.info("ami-id: {}".format(ami_id))
             response = ssm_client.start_automation_execution(DocumentName=os.environ['DocumentName'],
-              Parameters={'Windows2012R2BaseSourceAmiId': [ami_id,], 'AutomationAssumeRoleARN': [os.environ['AutomationAssumeRoleARN'],]}
+              Parameters={'Windows2016SQL2017STDSourceAmiId': [ami_id,], 'AutomationAssumeRoleARN': [os.environ['AutomationAssumeRoleARN'],]}
             )
             logger.info(response)
   SSMLambdaInvokePermission:
     Type: "AWS::Lambda::Permission"
     Properties:
-      FunctionName: !GetAtt "Windows2012R2BaseSSMLambda.Arn"
+      FunctionName: !GetAtt "Windows2016SQL2017STDSSMLambda.Arn"
       Action: "lambda:InvokeFunction"
       Principal: "sns.amazonaws.com"
       SourceArn: !Ref "WindowsNewAMITopicARN"

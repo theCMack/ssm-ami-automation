@@ -8,10 +8,10 @@ Parameters:
     Description: "AMI Encryption SSM service role ARN"
     Type: "String"
 Outputs:
-  WindowsSSMAutomationDocument:
-    Value: !Ref "WindowsSSMAutomationDocument"
+  Windows2012R2BaseSSMAutomationDocument:
+    Value: !Ref "Windows2012R2BaseSSMAutomationDocument"
 Resources:
-  WindowsSSMAutomationDocument:
+  Windows2012R2BaseSSMAutomationDocument:
     Type: "AWS::SSM::Document"
     Properties:
       DocumentType: "Automation"
@@ -57,7 +57,7 @@ Resources:
               InstanceId: "{{startInstances.InstanceIds}}"
               ImageName: "Pre-encryption Windows 2012 R2 Base - Sourced from {{Windows2012R2BaseSourceAmiId}} on {{global:DATE}}"
               NoReboot: true
-              ImageDescription: "Temporary AMI created by SSM automation, To be removed by Cloud Custodian"
+              ImageDescription: "Temporary AMI created by SSM automation, to be removed by Cloud Custodian"
         - name: "createEncryptedCopy"
           action: "aws:copyImage"
           maxAttempts: 3

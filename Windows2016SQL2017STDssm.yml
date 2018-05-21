@@ -1,0 +1,78 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "SSM creation to automate encrypting new Windows AMIs"
+Parameters:
+  AMIeEC2InstanceProfile:
+    Description: "AMI Encryption EC2 instance profile name"
+    Type: "String"
+  AMIeSSMRoleARN:
+    Description: "AMI Encryption SSM service role ARN"
+    Type: "String"
+Outputs:
+  WindowsSSMAutomationDocument:
+    Value: !Ref "WindowsSSMAutomationDocument"
+Resources:
+  WindowsSSMAutomationDocument:
+    Type: "AWS::SSM::Document"
+    Properties:
+      DocumentType: "Automation"
+      Content:
+        schemaVersion: "0.3"
+        description: "Automation Document to Encrypt Windows AMIs."
+        assumeRole: "{{AutomationAssumeRoleARN}}"
+        parameters:
+          InstanceProfileName:
+            type: "String"
+            description: "EC2 IAM profile that is allowed to perform RunCommand."
+            default: !Ref "AMIeEC2InstanceProfile"
+          AutomationAssumeRoleARN:
+            type: "String"
+            description: "Role under which to execute this automation."
+            default: !Ref "AMIeSSMRoleARN"
+          Windows2016SQL2017STDSourceAmiId:
+            type: "String"
+            description: "Source Windows 2016 SQL 2017 Standard AMI ID."
+        mainSteps:
+        - name: "startInstances"
+          action: "aws:runInstances"
+          timeoutSeconds: 1200
+          maxAttempts: 1
+          onFailure: "Abort"
+          inputs:
+              ImageId: "{{Windows2016SQL2017STDSourceAmiId}}"
+              InstanceType: m4.large
+              MinInstanceCount: 1
+              MaxInstanceCount: 1
+        - name: "stopInstance"
+          action: "aws:changeInstanceState"
+          maxAttempts: 1
+          onFailure: "Continue"
+          inputs:
+              InstanceIds: "{{startInstances.InstanceIds}}"
+              DesiredState: "stopped"
+        - name: "createImage"
+          action: "aws:createImage"
+          maxAttempts: 1
+          onFailure: "Continue"
+          inputs:
+              InstanceId: "{{startInstances.InstanceIds}}"
+              ImageName: "Pre-encryption Windows 2016 SQL 2017 Standard - Sourced from {{Windows2016SQL2017STDSourceAmiId}} on {{global:DATE}}"
+              NoReboot: true
+              ImageDescription: "Temporary AMI created by SSM automation, to be removed by Cloud Custodian"
+        - name: "createEncryptedCopy"
+          action: "aws:copyImage"
+          maxAttempts: 3
+          onFailure: "Abort"
+          inputs:
+            SourceImageId: "{{createImage.ImageId}}"
+            SourceRegion: "us-east-1"
+            ImageName: "Encrypted Windows 2016 SQL 2017 Standard - Sourced from {{Windows2016SQL2017STDSourceAmiId}} on {{global:DATE}}"
+            Encrypted: true
+        - name: "terminateInstance"
+          action: "aws:changeInstanceState"
+          maxAttempts: 1
+          onFailure: "Continue"
+          inputs:
+              InstanceIds: "{{startInstances.InstanceIds}}"
+              DesiredState: "terminated"
+        outputs:
+        - createEncryptedCopy.ImageId
