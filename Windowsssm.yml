@@ -39,7 +39,7 @@ Resources:
           inputs:
             SourceImageId: "{{Windows2012R2BaseSourceAmiId}}"
             SourceRegion: "us-east-1"
-            ImageName: "Encrypted Amazon Linux 2 - Sourced from {{Windows2012R2BaseSourceAmiId}} on {{global:DATE}}"
+            ImageName: "Encrypted Windows 2012 R2 Base - Sourced from {{Windows2012R2BaseSourceAmiId}} on {{global:DATE}}"
             Encrypted: true
         outputs:
         - createEncryptedCopy.ImageId
