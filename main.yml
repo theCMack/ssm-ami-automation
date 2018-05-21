@@ -30,7 +30,7 @@ Resources:
   AmazonLinux2SSMLambda:
     Type: "AWS::CloudFormation::Stack"
     Properties:
-      TemplateURL: !Sub "https://s3.amazonaws.com/${S3BucketName}/lambda.yml"
+      TemplateURL: !Sub "https://s3.amazonaws.com/${S3BucketName}/AmazonLinux2lambda.yml"
       Parameters:
         NewAMITopicARN: !Ref "NewAMITopicARN"
         AMIeLambdaRoleARN: !GetAtt "AMIeSSMRoles.Outputs.AMIeLambdaRoleARN"
