@@ -10,14 +10,10 @@ Parameters:
 #    Default: "arn:aws:sns:us-east-1:137112412989:amazon-linux-ami-updates" # Amazon Linux
 #    Default: "arn:aws:sns:us-east-1:801119661308:ec2-windows-ami-update"   # Windows
     Default: "arn:aws:sns:us-east-1:829829645734:SNSLinux" #created for testing
-  NotificationEmail:
-    Description: "Notification email address for SSM updates"
-    AllowedPattern: "^.+@.+$"
-    Type: "String"
-    MinLength: 5
   S3BucketName:
     Type: "String"
     MinLength: 3
+    Default: "ami-encryption-automagic" # My temporary S3 bucket that contains all the ymls
 Resources:
   AMIeSSMRoles:
     Type: "AWS::CloudFormation::Stack"
@@ -39,9 +35,3 @@ Resources:
         AMIeLambdaRoleARN: !GetAtt "AMIeSSMRoles.Outputs.AMIeLambdaRoleARN"
         AMIeSSMRoleARN: !GetAtt "AMIeSSMRoles.Outputs.AMIeSSMRoleARN"
         SSMAutomationDocument: !GetAtt "SSMDocument.Outputs.SSMAutomationDocument"
-  SSMEvent:
-    Type: "AWS::CloudFormation::Stack"
-    Properties:
-      TemplateURL: !Sub "https://s3.amazonaws.com/${S3BucketName}/event.yml"
-      Parameters:
-        NotificationEmail: !Ref "NotificationEmail"
