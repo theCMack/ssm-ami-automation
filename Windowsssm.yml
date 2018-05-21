@@ -30,7 +30,7 @@ Resources:
             default: !Ref "AMIeSSMRoleARN"
           Windows2012R2BaseSourceAmiId:
             type: "String"
-            description: "Source Amazon Linux 2 AMI ID."
+            description: "Source Windows 2012 R2 Base AMI ID."
         mainSteps:
         - name: "createEncryptedCopy"
           action: "aws:copyImage"

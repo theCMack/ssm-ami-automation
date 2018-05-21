@@ -23,6 +23,6 @@ Resources:
   AMITopicSubscription:
     Type: "AWS::SNS::Subscription"
     Properties:
-      Endpoint: !Ref "Windows2012R2SSMLambdaARN"
+      Endpoint: !Ref "Windows2012R2BaseSSMLambdaARN"
       Protocol: lambda
       TopicArn: !Ref "WindowsNewAMITopicARN"
