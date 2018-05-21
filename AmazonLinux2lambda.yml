@@ -1,8 +1,8 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: "Creates lambda function to trigger SSM automation and allows it to be invoked by SNS"
 Parameters:
-  NewAMITopicARN:
-    Description: "New AMI SNS topic ARN"
+  AmazonLinux2NewAMITopicARN:
+    Description: "Amazon Linux New AMI SNS topic ARN"
     Type: "String"
 #    Default: "arn:aws:sns:us-east-1:137112412989:amazon-linux-ami-updates"
     Default: "arn:aws:sns:us-east-1:829829645734:SNSLinux" #created for testing
@@ -58,4 +58,4 @@ Resources:
       FunctionName: !GetAtt "AmazonLinux2SSMLambda.Arn"
       Action: "lambda:InvokeFunction"
       Principal: "sns.amazonaws.com"
-      SourceArn: !Ref "NewAMITopicARN"
+      SourceArn: !Ref "AmazonLinux2NewAMITopicARN"

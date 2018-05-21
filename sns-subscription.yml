@@ -1,9 +1,9 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: "Subscribes previously created Lambda function to the official Linux AMI SNS topic. RUN ONLY IN us-east-1 REGION"
+Description: "Subscribes previously created Lambda functions to related AMI update SNS topic. RUN ONLY IN us-east-1 REGION"
 Parameters:
   AmazonLinux2SSMLambdaARN:
     Type: "String"
-  NewAMITopicARN:
+  AmazonLinuxNewAMITopicARN:
     Type: "String"
 #    Default: "arn:aws:sns:us-east-1:137112412989:amazon-linux-ami-updates"
     Default: "arn:aws:sns:us-east-1:829829645734:SNSLinux" #created for testing
@@ -13,4 +13,4 @@ Resources:
     Properties:
       Endpoint: !Ref "AmazonLinux2SSMLambdaARN"
       Protocol: lambda
-      TopicArn: !Ref "NewAMITopicARN"
+      TopicArn: !Ref "AmazonLinuxNewAMITopicARN"
