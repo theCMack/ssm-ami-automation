@@ -42,6 +42,13 @@ Resources:
         AMIeLambdaRoleARN: !GetAtt "AMIeSSMRoles.Outputs.AMIeLambdaRoleARN"
         AMIeSSMRoleARN: !GetAtt "AMIeSSMRoles.Outputs.AMIeSSMRoleARN"
         AmazonLinuxSSMAutomationDocument: !GetAtt "AmazonLinuxSSMDocument.Outputs.AmazonLinuxSSMAutomationDocument"
+  WindowsSSMDocument:
+    Type: "AWS::CloudFormation::Stack"
+    Properties:
+      TemplateURL: !Sub "https://s3.amazonaws.com/${S3BucketName}/Windowsssm.yml"
+      Parameters:
+        AMIeEC2InstanceProfile: !GetAtt "AMIeSSMRoles.Outputs.AMIeEC2InstanceProfile"
+        AMIeSSMRoleARN: !GetAtt "AMIeSSMRoles.Outputs.AMIeSSMRoleARN"
   Windows2012R2BaseSSMLambda:
     Type: "AWS::CloudFormation::Stack"
     Properties:
