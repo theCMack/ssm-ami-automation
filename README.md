@@ -1,4 +1,4 @@
-# ssm-encrypt-ami-automation
+# ssm-ami-encryption-automation
 Automated AMI encryption of updated Amazon provided AMIs using SSM
 
 The idea is to auto create a new encrypted AMI every time Amazon updates an AMI such as Amazon Linux 2 or Windows 2016 Base.
