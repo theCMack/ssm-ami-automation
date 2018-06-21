@@ -63,10 +63,11 @@ Resources:
           maxAttempts: 3
           onFailure: "Abort"
           inputs:
-            SourceImageId: "{{createImage.ImageId}}"
-            SourceRegion: "us-east-1"
-            ImageName: "Encrypted - Windows 2012 R2 Base - Sourced from {{Windows2012R2BaseSourceAmiId}} on {{global:DATE}}"
-            Encrypted: true
+              SourceImageId: "{{createImage.ImageId}}"
+              SourceRegion: "us-east-1"
+              ImageName: "Encrypted - Windows 2012 R2 Base - Sourced from {{Windows2012R2BaseSourceAmiId}} on {{global:DATE}}"
+              ImageDescription: "Encrypted - Windows 2012 R2 Base - Sourced from {{Windows2012R2BaseSourceAmiId}} on {{global:DATE}}"
+              Encrypted: true
         - name: "terminateInstance"
           action: "aws:changeInstanceState"
           maxAttempts: 1

@@ -63,10 +63,11 @@ Resources:
           maxAttempts: 3
           onFailure: "Abort"
           inputs:
-            SourceImageId: "{{createImage.ImageId}}"
-            SourceRegion: "us-east-1"
-            ImageName: "Encrypted - Windows 2016 SQL 2017 Standard - Sourced from {{Windows2016SQL2017STDSourceAmiId}} on {{global:DATE}}"
-            Encrypted: true
+              SourceImageId: "{{createImage.ImageId}}"
+              SourceRegion: "us-east-1"
+              ImageName: "Encrypted - Windows 2016 SQL 2017 Standard - Sourced from {{Windows2016SQL2017STDSourceAmiId}} on {{global:DATE}}"
+              ImageDescription: "Encrypted - Windows 2016 SQL 2017 Standard - Sourced from {{Windows2016SQL2017STDSourceAmiId}} on {{global:DATE}}"
+              Encrypted: true
         - name: "terminateInstance"
           action: "aws:changeInstanceState"
           maxAttempts: 1

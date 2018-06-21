@@ -37,9 +37,10 @@ Resources:
           maxAttempts: 3
           onFailure: "Abort"
           inputs:
-            SourceImageId: "{{AmazonLinux2SourceAmiId}}"
-            SourceRegion: "us-east-1"
-            ImageName: "Encrypted - Amazon Linux 2 - Sourced from {{AmazonLinux2SourceAmiId}} on {{global:DATE}}"
-            Encrypted: true
+              SourceImageId: "{{AmazonLinux2SourceAmiId}}"
+              SourceRegion: "us-east-1"
+              ImageName: "Encrypted - Amazon Linux 2 - Sourced from {{AmazonLinux2SourceAmiId}} on {{global:DATE}}"
+              ImageDescription: "Encrypted - Amazon Linux 2 - Sourced from {{AmazonLinux2SourceAmiId}} on {{global:DATE}}"
+              Encrypted: true
         outputs:
         - createEncryptedCopy.ImageId
