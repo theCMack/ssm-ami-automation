@@ -42,7 +42,6 @@ Resources:
               InstanceType: m4.large
               MinInstanceCount: 1
               MaxInstanceCount: 1
-              KeyName: prosight-prd-keypair
         - name: "stopInstance"
           action: "aws:changeInstanceState"
           maxAttempts: 1
