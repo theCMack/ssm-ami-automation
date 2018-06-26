@@ -10,25 +10,25 @@ Parameters:
   Windows2016SQL2017STDSSMLambdaARN:
     Type: "String"
 Resources:
-  AMITopicSubscription:
+  AmazonLinux2AMITopicSubscription:
     Type: "AWS::SNS::Subscription"
     Properties:
       Endpoint: !Ref "AmazonLinux2SSMLambdaARN"
       Protocol: lambda
       TopicArn: "arn:aws:sns:us-east-1:137112412989:amazon-linux-ami-updates"
-  AMITopicSubscription:
+  Windows2012R2BaseAMITopicSubscription:
     Type: "AWS::SNS::Subscription"
     Properties:
       Endpoint: !Ref "Windows2012R2BaseSSMLambdaARN"
       Protocol: lambda
       TopicArn: "arn:aws:sns:us-east-1:801119661308:ec2-windows-ami-update"
-  AMITopicSubscription:
+  Windows2016FullBaseAMITopicSubscription:
     Type: "AWS::SNS::Subscription"
     Properties:
       Endpoint: !Ref "Windows2016FullBaseSSMLambdaARN"
       Protocol: lambda
       TopicArn: "arn:aws:sns:us-east-1:801119661308:ec2-windows-ami-update"
-  AMITopicSubscription:
+  Windows2016SQL2017STDAMITopicSubscription:
     Type: "AWS::SNS::Subscription"
     Properties:
       Endpoint: !Ref "Windows2016SQL2017STDSSMLambdaARN"
