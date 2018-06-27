@@ -79,10 +79,16 @@ Resources:
               Encrypted: true
         - name: "terminateInstance"
           action: "aws:changeInstanceState"
-          maxAttempts: 1
+          maxAttempts: 3
           onFailure: "Continue"
           inputs:
               InstanceIds: "{{startInstances.InstanceIds}}"
               DesiredState: "terminated"
+        - name: "removeUnencryptedImage"
+          action: "aws:deleteImage"
+          maxAttempts: 3
+          onFailure: "Continue"
+          inputs:
+              ImageId: "{{createImage.ImageId}}"
         outputs:
         - createEncryptedCopy.ImageId
