@@ -42,6 +42,15 @@ Resources:
               InstanceType: m4.large
               MinInstanceCount: 1
               MaxInstanceCount: 1
+              IamInstanceProfileName: "{{InstanceProfileName}}"
+        - name: "runSysprepGeneralize"
+          action: aws:runCommand
+          maxAttempts: 3
+          onFailure: "Abort"
+          timeoutSeconds: 7200
+          inputs:
+              DocumentName: AWSEC2-RunSysprep
+              InstanceIds: "{{startInstances.InstanceIds}}"
         - name: "stopInstance"
           action: "aws:changeInstanceState"
           maxAttempts: 1
@@ -68,12 +77,12 @@ Resources:
               ImageName: "Encrypted - Windows 2016 Full Base - Sourced from {{Windows2016FullBaseSourceAmiId}} on {{global:DATE}}"
               ImageDescription: "Encrypted - Windows 2016 Full Base - Sourced from {{Windows2016FullBaseSourceAmiId}} on {{global:DATE}}"
               Encrypted: true
-        # - name: "terminateInstance"
-        #   action: "aws:changeInstanceState"
-        #   maxAttempts: 1
-        #   onFailure: "Continue"
-        #   inputs:
-        #       InstanceIds: "{{startInstances.InstanceIds}}"
-        #       DesiredState: "terminated"
+        - name: "terminateInstance"
+          action: "aws:changeInstanceState"
+          maxAttempts: 1
+          onFailure: "Continue"
+          inputs:
+              InstanceIds: "{{startInstances.InstanceIds}}"
+              DesiredState: "terminated"
         outputs:
         - createEncryptedCopy.ImageId
