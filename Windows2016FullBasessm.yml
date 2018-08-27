@@ -90,5 +90,16 @@ Resources:
           onFailure: "Continue"
           inputs:
               ImageId: "{{createImage.ImageId}}"
+        - name: "createTags"
+          action: "aws:createTags"
+          maxAttempts: 3
+          onFailure: "Continue"
+          inputs:
+              ResourceType: "EC2"
+              ResourceIds:
+              - "{{createEncryptedCopy.ImageId}}"
+              Tags:
+              - Key: "tag:cc_exception"
+                Value: "ami-90-day"
         outputs:
         - createEncryptedCopy.ImageId
