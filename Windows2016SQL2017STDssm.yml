@@ -99,7 +99,7 @@ Resources:
               ResourceIds:
               - "{{createEncryptedCopy.ImageId}}"
               Tags:
-              - Key: "tag:cc_exception"
+              - Key: "cc_exception"
                 Value: "ami-90-day"
         outputs:
         - createEncryptedCopy.ImageId
